@@ -46,3 +46,10 @@ suites:
       inspec_tests:
         - test/smoke/resources/install_netdata_nginx_test.rb
     attributes:
+  - name: uninstall_netdata_nginx
+    run_list:
+      - recipe[test::uninstall_netdata_nginx]
+    verifier:
+      inspec_tests:
+        - test/smoke/resources/uninstall_netdata_nginx_test.rb
+    attributes:

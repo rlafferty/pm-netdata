@@ -1,6 +1,6 @@
 #
 # Cookbook:: pm-netdata
-# Spec:: uninstall_netdata
+# Spec:: uninstall_netdata_nginx
 #
 # Copyright:: 2017, PhishMe, All Rights Reserved.
 
@@ -13,7 +13,7 @@ test_platforms = {
   }
 }
 
-describe 'test::uninstall_netdata' do
+describe 'test::uninstall_netdata_nginx' do
   test_platforms.each do |platform, config|
     config['versions'].each do |version|
       context "running on: #{platform} #{version}" do
@@ -40,6 +40,14 @@ describe 'test::uninstall_netdata' do
 
         it 'removes netdata group' do
           expect(chef_run).to remove_group('netdata')
+        end
+
+        it 'removes nginx site' do
+          expect(chef_run).to disable_nginx_site('netdata')
+        end
+
+        it 'removes nginx site file' do
+          expect(chef_run).to delete_file('/etc/nginx/sites-available/netdata')
         end
       end
     end

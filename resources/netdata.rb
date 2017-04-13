@@ -38,6 +38,10 @@ action :install do
 end
 
 action :uninstall do
+  service 'netdata' do
+    action [:stop, :disable]
+  end
+  
   execute 'run netdata installer' do
     cwd "#{Chef::Config[:file_cache_path]}/netdata"
     command 'yes | ./netdata-uninstaller.sh --force'
@@ -57,6 +61,22 @@ action :uninstall do
     append true
     excluded_members ['netdata']
     action :manage
+  end
+
+  if new_resource.nginx_config
+    include_recipe 'pm-nginx'
+
+    nginx_site 'netdata' do
+      action :disable
+    end
+
+    service 'nginx' do
+      action :reload
+    end
+
+    file "#{node['nginx']['dir']}/sites-available/netdata" do
+      action :delete
+    end
   end
 end
 

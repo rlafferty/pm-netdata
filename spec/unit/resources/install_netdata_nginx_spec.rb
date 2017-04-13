@@ -1,6 +1,6 @@
 #
 # Cookbook:: pm-netdata
-# Spec:: install_netdata
+# Spec:: install_netdata_nginx
 #
 # Copyright:: 2017, PhishMe, All Rights Reserved.
 

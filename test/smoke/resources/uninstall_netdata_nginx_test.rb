@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for resource uninstall_netdata in pm-netdata
+# Inspec test for resource uninstall_netdata_nginx in pm-netdata
 
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
@@ -24,4 +24,8 @@ end
 
 describe etc_group.where(name: 'adm') do
   its('users') { should_not include 'netdata' }
+end
+
+describe file('/etc/nginx/sites-available/netdata') do
+  it { should_not exist }
 end
