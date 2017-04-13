@@ -31,3 +31,11 @@ suites:
       inspec_tests:
         - test/smoke/resources/install_netdata_test.rb
     attributes:
+  - name: uninstall_netdata
+    run_list:
+      - recipe[test::install_netdata]
+      - recipe[test::uninstall_netdata]
+    verifier:
+      inspec_tests:
+        - test/smoke/resources/uninstall_netdata_test.rb
+    attributes:

@@ -22,8 +22,31 @@ action :install do
   end
 
   service 'netdata' do
-    supports :status => true
-    action [ :enable, :start ]
+    supports status: true
+    action [:enable, :start]
+  end
+end
+
+action :uninstall do
+  execute 'run netdata installer' do
+    cwd "#{Chef::Config[:file_cache_path]}/netdata"
+    command 'yes | ./netdata-uninstaller.sh --force'
+    action :run
+    only_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/netdata/netdata-uninstaller.sh") }
+  end
+
+  user 'netdata' do
+    action :remove
+  end
+
+  group 'netdata' do
+    action :remove
+  end
+
+  group 'adm' do
+    append true
+    excluded_members ['netdata']
+    action :manage
   end
 end
 
