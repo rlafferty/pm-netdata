@@ -23,3 +23,5 @@ chef_version '>= 12.5' if respond_to?(:chef_version)
 #
 # source_url 'https://github.com/<insert_org_here>/pm-netdata'
 # if respond_to?(:source_url)
+
+depends 'pm-nginx'

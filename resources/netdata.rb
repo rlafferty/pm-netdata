@@ -1,7 +1,7 @@
 resource_name :netdata
 
 property :netdata_name, String, name_property: true
-property :nginx_config, String, default: 'new'
+property :nginx_config, [true, false], default: false
 
 default_action :install
 
@@ -24,6 +24,16 @@ action :install do
   service 'netdata' do
     supports status: true
     action [:enable, :start]
+  end
+
+  if new_resource.nginx_config
+    include_recipe 'pm-nginx'
+
+    nginx_site 'netdata' do
+      template node['pm-netdata']['nginx']['conf_template']
+      cookbook node['pm-netdata']['nginx']['conf_cookbook']
+      action :enable
+    end
   end
 end
 
