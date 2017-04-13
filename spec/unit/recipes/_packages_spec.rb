@@ -27,6 +27,10 @@ describe 'pm-netdata::_packages' do
           expect { chef_run }.to_not raise_error
         end
 
+        it 'updates apt repos' do
+          expect(chef_run).to update_apt_update('update')
+        end
+
         %w(zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl).each do |package_to_install|
           it "installs package: #{package_to_install}" do
             expect(chef_run).to install_package(package_to_install)
