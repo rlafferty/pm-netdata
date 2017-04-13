@@ -1,6 +1,6 @@
 #
-# Cookbook:: pm-postgresql
-# Spec:: create_database
+# Cookbook:: pm-netdata
+# Spec:: install_netdata
 #
 # Copyright:: 2017, PhishMe, All Rights Reserved.
 
@@ -28,6 +28,10 @@ describe 'test::install_netdata' do
 
         it 'converges successfully' do
           expect { :chef_run }.to_not raise_error
+        end
+
+        it 'installs netdata' do
+          expect(chef_run).to install_netdata('stuff')
         end
 
         it 'includes _packages prerequisite recipe' do
